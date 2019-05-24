@@ -1,5 +1,6 @@
 package sensorApplication;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
+import javax.swing.JProgressBar;
 
 import sensorAdapter.*;
 import sensor.*;
@@ -18,9 +20,19 @@ public class SensorApplication extends JFrame {
 	public class SensorPanel extends JPanel {
 		public SensorPanel(SensorAdapter sa)
 		{
+			setLayout(new GridLayout(2,1));
 			setBorder(new TitledBorder(sa.getSensorName()));
-			add(new JLabel("Value: "+Double.toString(sa.getSensorValue())));
-			add(new JLabel("Status: "+sa.getSensorStatus()));
+			String value = Double.toString(sa.getSensorValue());
+			String status = sa.getSensorStatus();
+
+			JProgressBar bar = new JProgressBar();
+			bar.setForeground(sa.getBarColor());
+			bar.setBackground(Color.GRAY);
+			bar.setValue(sa.getBarProgress());
+			add(bar);
+			JLabel readout = new JLabel(status+" ==> "+value);
+			readout.setHorizontalAlignment(JLabel.CENTER);
+			add(readout);
 		}
 	}
 	
